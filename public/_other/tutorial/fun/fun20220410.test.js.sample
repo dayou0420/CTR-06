@@ -1,0 +1,47 @@
+const fun = require('./fun20220410');
+
+test('test hello method', function() {
+    const val1 = 'hello';
+    expect(fun.hello(val1)).toBe(val1);
+});
+
+test('test fn method', function() {
+    const val1 = 1;
+    const val2 = 2;
+    expect(fun.fn(val1, val2)).toBe(`${val1}, ${val2}`);
+});
+
+test('test fn method, defalut value equal 1', function() {
+    const val1 = 1;
+    expect(fun.fn(val1)).toBe(`${val1}, 1`);
+});
+
+test('test fn method, defalut value equal 1 in undefined', function() {
+    const val1 = 1;
+    const val2 = undefined;
+    expect(fun.fn(val1, val2)).toBe(`${val1}, 1`);
+});
+
+test('test fn method, defalut value equal 1 in null', function() {
+    const val1 = 1;
+    const val2 = null;
+    expect(fun.fn(val1, val2)).toBe(`${val1}, null`);
+});
+
+test('test hello2 method', function() {
+    expect(fun.hello2()).toBe('hello');
+});
+
+test('test fn2 method, callback with hello method', function() {
+    expect(fun.fn2(fun.hello2)).toBe('hello');
+});
+
+test('test fn2 method, callback with bye', function() {
+    expect(fun.fn2(fun.bye)).toBe('bye');
+});
+
+test('test hello3 method, callback with bye', function() {
+    expect(fun.fn2(fun.hello3)).toBe('hello Rem');
+});
+
+

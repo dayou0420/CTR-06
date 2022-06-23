@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  app:
+    build: ./infra/node
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./:/src
+    stdin_open: true
+    tty: true
+
+  angular:
+    build: ./infra/angular
+    ports:
+      - '4200:4200'
+    volumes:
+      - './server:/src'
+    tty: true

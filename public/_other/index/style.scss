@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+$cBlue: #0d6efd;
+$cRed: #dc3545;
+$cGreen: #198754;
+$cYellow: #ffc107;
+$cBlack: #21252f;
+$cWhite: #fff;
+
+body {
+
+    font-family: 'Sora', sans-serif;
+    margin: 15px;
+    color: $cBlue;
+
+    & .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & .title {
+            margin-bottom: 10px;
+
+            &.inview {
+                color: $cRed;
+            }
+        }
+
+        & #game {
+            width: 300px;
+            height: 200px;
+            background-color: $cBlack;
+        }
+
+        & #character {
+            width: 20px;
+            height: 50px;
+            position: relative;
+            top: 150px;
+            background-color: $cGreen;
+
+            &::before {
+                content: '';
+                display: block;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: -20px;
+                border-radius: 50px;
+                background-color: $cYellow;
+            }
+        }
+
+        & .animate {
+            animation: jump 0.3s linear;
+        }
+
+        @keyframes jump {
+            0% { top: 150px; }
+            30% { top: 100px; }
+            70% { top: 100px; }
+            100% { top: 150px; }
+        }
+
+        & #block {
+            width: 20px;
+            height: 20px;
+            background-color: $cRed;
+            position: relative;
+            top: 130px;
+            left: 500px;
+            animation: block 1s infinite linear;
+            transform: rotate(45deg);
+        }
+
+        @keyframes block {
+            0% { left: 300px; }
+            100% { left: -20px; }
+        }
+
+        & .msg {
+            color: $cRed;
+            text-align: center;
+        }
+
+        & .counter {
+            text-align: center;
+        }
+
+        & .btn {
+            color: $cWhite;
+            border-radius: 0;
+            border-width: 2px;
+            padding: 15px 30px;
+            background-color: $cBlue;
+            border: none;
+            margin: 20px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+                color: $cBlue;
+                background-color: $cWhite;
+            }
+        }
+
+        & .ul-tag {
+            list-style: none;
+
+            & .a-tag {
+                // color: $cBlue;
+                color: $cWhite;
+                text-decoration: none;
+            }
+        }
+    }
+}

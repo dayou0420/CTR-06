@@ -1,0 +1,7 @@
+const subtract = require('./subtract');
+
+test('property subtracting two numbers', function() {
+    expect(
+        subtract(1, 2)
+    ).toBe(-1);
+})

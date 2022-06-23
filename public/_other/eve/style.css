@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap');
+
+:root {
+    --blue: #0d6efd;
+    --red: #dc3545;
+    --green: #198754;
+    --yellow:  #ffc107;
+    --dark: #21252f;
+}
+
+div {
+    background: #ccc;
+    border: var(--dark) solid 2px;
+    margin: 20px;
+    min-height: 20px;
+}

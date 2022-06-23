@@ -1,0 +1,11 @@
+const Fun20220410 = require('./hello');
+
+const fnInstance = new Fun20220410();
+
+test('test hello function', function() {
+    expect(fnInstance.hello()).toBe('hello');
+});
+
+test('test sum function', function() {
+    expect(fnInstance.sum()).toBe('hello');
+});

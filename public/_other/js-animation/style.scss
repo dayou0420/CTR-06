@@ -1,0 +1,84 @@
+@import 'mixin';
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap');
+
+$cBule: #0d6efd;
+$cYellow: #ffc107;
+$cGreen: #198754;
+$cRed: #dc3545;
+$cBlack: #21252f;
+$cWhite: #fff;
+
+html {
+    font-family: 'Sora', sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.btn {
+    background-color: $cWhite;
+    border: 1px solid $cBlack;
+    font-weight: 600;
+    padding: 10px 40px;
+    cursor: pointer;
+    color: $cBlack;
+    transition: all 0.3s;
+
+    &.float {
+        &:hover {
+            background-color: $cBlack;
+            color: $cWhite;
+            box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
+        }
+    }
+}
+
+#container {
+    position: relative;
+    height: 100vh;
+    background-color: $cGreen;
+}
+
+.animate-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $cYellow;
+    opacity: 0;
+    font-size: 2em;
+
+    &.inview {
+        opacity: 1;
+
+        & .char {
+            display: inline-block;
+
+            @include animation(
+                $name: kf-animate-chars, 
+                $duration: 0.5s,
+                $timing-function: cubic-bezier(0.39, 1.57, 0.58, 1),
+                $fill-mode: both
+            );
+
+            @for $i from 1 to 9 {
+                &:nth-child(#{$i}) {
+                    animation-delay: $i * 0.04s;
+                }
+            }
+        }
+    }
+}
+
+@keyframes kf-animate-chars {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
