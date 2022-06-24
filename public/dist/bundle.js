@@ -52,8 +52,8 @@ Person = __decorate([
     Logger('Output log'),
     withTemplate('<h1>Person Object</h1>', 'app')
 ], Person);
-const pers = new Person();
-console.log(pers);
+// const pers = new Person();
+// console.log(pers);
 function Log(target, propertyName) {
     console.log('Property Decorator');
     console.log(target, propertyName);
