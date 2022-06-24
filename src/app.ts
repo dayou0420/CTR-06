@@ -10,16 +10,23 @@ function Logger(logSrting: string) {
 function withTemplate(template: string, hookId: string) {
     console.log('TEMPLATE FACTORY');
 
-    return function(constructor: any) {
-        console.log('Display template');
-        const hookEl = document.getElementById(hookId);
-        const p = new constructor();
+    return function<T extends { new(...args: any[]): { name: string } }>(originalConstructor: T) {
 
-        if (hookEl) {
-            hookEl.innerHTML = template;
-            hookEl.querySelector('h1')!.textContent = p.name;
-        }
-    }
+        return class extends originalConstructor {
+            constructor(..._: any[]) {
+                super();
+                console.log('Display template');
+
+                const hookEl = document.getElementById(hookId);
+
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector('h1')!.textContent = this.name;
+                }
+            }
+        };
+    };
+
 }
 
 // @Logger('Output log - PERSON')

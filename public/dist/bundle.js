@@ -27,14 +27,18 @@ function Logger(logSrting) {
 }
 function withTemplate(template, hookId) {
     console.log('TEMPLATE FACTORY');
-    return function (constructor) {
-        console.log('Display template');
-        const hookEl = document.getElementById(hookId);
-        const p = new constructor();
-        if (hookEl) {
-            hookEl.innerHTML = template;
-            hookEl.querySelector('h1').textContent = p.name;
-        }
+    return function (originalConstructor) {
+        return class extends originalConstructor {
+            constructor(..._) {
+                super();
+                console.log('Display template');
+                const hookEl = document.getElementById(hookId);
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector('h1').textContent = this.name;
+                }
+            }
+        };
     };
 }
 // @Logger('Output log - PERSON')
