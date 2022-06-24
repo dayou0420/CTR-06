@@ -49,7 +49,8 @@ nodeOps.on(document, 'DOMContentLoaded', () => {
         const nowHour = nowTime().getHours();
         const day = whichDay(nowTime());
         const good = 'Good';
-        const you = 'U';
+        // const you = 'U';
+        const you = '';
 
         if((nowHour >= 5) && (nowHour < 12)) {
             return `${good} ${day} Morning ${you}`;
