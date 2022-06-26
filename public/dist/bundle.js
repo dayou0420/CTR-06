@@ -5,6 +5,18 @@ var __webpack_exports__ = {};
   !*** ./src/app.ts ***!
   \********************/
 
+function Autobind(target, name, descriptor) {
+    const originalMethod = descriptor.value;
+    const adjDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        }
+    };
+    return adjDescriptor;
+}
 class ProjectInput {
     constructor() {
         this.tempmateElement = document.getElementById('project-input');
@@ -22,6 +34,7 @@ class ProjectInput {
         event.preventDefault();
         console.log(this.titleElement.value);
     }
+    // @Autobind
     configure() {
         this.element.addEventListener('submit', this.submitHandler.bind(this));
     }
