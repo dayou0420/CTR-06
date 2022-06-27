@@ -37,15 +37,37 @@ class ProjectInput {
         const importedNode = document.importNode(this.tempmateElement.content, true);
         this.element = importedNode.firstElementChild;
         this.element.id = 'user-input';
-        this.titleElement = this.element.querySelector('#title');
-        this.descriptionElement = this.element.querySelector('#description');
-        this.mandayElement = this.element.querySelector('#manday');
+        this.titleInputElement = this.element.querySelector('#title');
+        this.descriptionInputElement = this.element.querySelector('#description');
+        this.mandayInputElement = this.element.querySelector('#manday');
         this.configure();
         this.attach();
     }
+    getherUserInput() {
+        const enteredTitle = this.titleInputElement.value;
+        const enteredDescription = this.descriptionInputElement.value;
+        const enteredManday = this.mandayInputElement.value;
+        if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredManday.trim().length === 0) {
+            alert('Incorrect inputs');
+            return;
+        }
+        else {
+            return [enteredTitle, enteredDescription, +enteredManday];
+        }
+    }
+    clearInputs() {
+        this.titleInputElement.value = '';
+        this.descriptionInputElement.value = '';
+        this.mandayInputElement.value = '';
+    }
     submitHandler(event) {
         event.preventDefault();
-        console.log(this.titleElement.value);
+        const userInput = this.getherUserInput();
+        if (Array.isArray(userInput)) {
+            const [title, descripption, manday] = userInput;
+            console.log(title, descripption, manday);
+            this.clearInputs();
+        }
     }
     configure() {
         this.element.addEventListener('submit', this.submitHandler);

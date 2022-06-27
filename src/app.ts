@@ -19,9 +19,9 @@ class ProjectInput {
     tempmateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     element: HTMLFormElement;
-    titleElement: HTMLInputElement;
-    descriptionElement: HTMLInputElement;
-    mandayElement: HTMLInputElement;
+    titleInputElement: HTMLInputElement;
+    descriptionInputElement: HTMLInputElement;
+    mandayInputElement: HTMLInputElement;
 
     constructor() {
         this.tempmateElement = document.getElementById('project-input')! as HTMLTemplateElement;
@@ -31,18 +31,43 @@ class ProjectInput {
         this.element = importedNode.firstElementChild as HTMLFormElement;
         this.element.id = 'user-input';
 
-        this.titleElement = this.element.querySelector('#title') as HTMLInputElement;
-        this.descriptionElement = this.element.querySelector('#description') as HTMLInputElement;
-        this.mandayElement = this.element.querySelector('#manday') as HTMLInputElement;
+        this.titleInputElement = this.element.querySelector('#title') as HTMLInputElement;
+        this.descriptionInputElement = this.element.querySelector('#description') as HTMLInputElement;
+        this.mandayInputElement = this.element.querySelector('#manday') as HTMLInputElement;
 
         this.configure();
         this.attach();
     }
 
+    private getherUserInput(): [string, string, number] | void {
+
+        const enteredTitle = this.titleInputElement.value;
+        const enteredDescription = this.descriptionInputElement.value;
+        const enteredManday = this.mandayInputElement.value;
+
+        if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredManday.trim().length === 0) {
+            alert('Incorrect inputs');
+            return;
+        } else {
+            return [enteredTitle, enteredDescription, +enteredManday];
+        }
+    }
+
+    private clearInputs() {
+        this.titleInputElement.value = '';
+        this.descriptionInputElement.value = '';
+        this.mandayInputElement.value = '';
+    }
+
     @autobind
     private submitHandler(event: Event) {
         event.preventDefault();
-        console.log(this.titleElement.value);
+        const userInput = this.getherUserInput();
+        if (Array.isArray(userInput)) {
+            const [title, descripption, manday] = userInput ;
+            console.log(title, descripption, manday);
+            this.clearInputs();
+        }
     }
 
     private configure() {
