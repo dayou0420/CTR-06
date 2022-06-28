@@ -12,3 +12,7 @@ npm i -D webpack webpack-cli ts-loader
 ```
 ng serve --host 0.0.0.0
 ```
+
+```
+rm -rf .git
+```
