@@ -60,6 +60,27 @@ function autobind(target, name, descriptor) {
     };
     return adjDescriptor;
 }
+class ProjectList {
+    constructor(type) {
+        this.type = type;
+        this.tempmateElement = document.getElementById('project-list');
+        this.hostElement = document.getElementById('app');
+        const importedNode = document.importNode(this.tempmateElement.content, true);
+        this.element = importedNode.firstElementChild;
+        this.element.id = `${this.type}-project`;
+        this.attach();
+        this.renderContent();
+    }
+    renderContent() {
+        const listId = `${this.type}-projects-list`;
+        this.element.querySelector('ul').id = listId;
+        this.element.querySelector('h2').textContent =
+            this.type === 'active' ? 'Active Project' : 'Completed Project';
+    }
+    attach() {
+        this.hostElement.insertAdjacentElement('beforeend', this.element);
+    }
+}
 class ProjectInput {
     constructor() {
         this.tempmateElement = document.getElementById('project-input');
@@ -127,6 +148,8 @@ __decorate([
     autobind
 ], ProjectInput.prototype, "submitHandler", null);
 const prjInput = new ProjectInput();
+const activePrjList = new ProjectList('active');
+const finishedPrjList = new ProjectList('finished');
 
 
 /***/ })
