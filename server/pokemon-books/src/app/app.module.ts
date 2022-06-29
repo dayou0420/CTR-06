@@ -9,12 +9,14 @@ import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
+import { TypePipe } from './pypes/type.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonListComponent,
-    PokemonDetailComponent
+    PokemonDetailComponent,
+    TypePipe
   ],
   imports: [
     BrowserModule,
