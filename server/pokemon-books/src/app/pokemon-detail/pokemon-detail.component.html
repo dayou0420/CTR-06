@@ -5,5 +5,11 @@
     <p>体力: {{pokemon.base.HP}}</p>
     <p>攻撃力: {{pokemon.base.Attack}}</p>
     <p>防御力: {{pokemon.base.Defense}}</p>
-    <p>スピード: {{pokemon.base.Speed}}</p>
+    <p>すばやさ: {{pokemon.base.Speed}}</p>
+    <canvas baseChart
+    [data]="radarChartData"
+    [options]="radarChartOptions"
+
+    [type]="radarChartType">
+  </canvas>
 </mat-card>
