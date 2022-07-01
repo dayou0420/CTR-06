@@ -4,11 +4,7 @@
 
 export const environment = {
   production: false,
-  weatherApiBaseUrl: 'https://community-open-weather-map.p.rapidapi.com/climate/month',
-  XRapidAPIHostHeaderName: 'X-RapidAPI-Host',
-  XRapidAPIHostHeaderValue: 'community-open-weather-map.p.rapidapi.com',
-  XRapidAPIKeyHeaderName: 'X-RapidAPI-Key',
-  XRapidAPIKeyHeaderValue: '',
+  weatherApiBaseUrl: 'https://api.open-meteo.com/v1/forecast?latitude=35.6785&longitude=139.6823&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FTokyo',
 };
 
 /*
