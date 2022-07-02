@@ -1,5 +1,5 @@
-import { Input } from "./input";
-import { Output } from "./output";
+import { Input } from "./input.ts";
+import { Output } from "./output.ts";
 
 export type Tx = {
     id: string;

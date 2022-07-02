@@ -1,5 +1,5 @@
-import { Tx } from './tx';
-import { Validator } from './validator';
+import { Tx } from './tx.ts';
+import { Validator } from './validator.ts';
 
 export type Block = {
     index: number;

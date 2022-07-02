@@ -1,4 +1,4 @@
-import { Validator } from "../types/validator";
+import { Validator } from "../types/validator.ts";
 
 export function pickWinner(): Validator {
     const v1: Validator = {
