@@ -8,15 +8,17 @@ import { WeatherService } from '../services/weather.service';
 })
 export class WeatherDetailComponent implements OnInit {
 
-  weatherData: any;
+  weatherDataTime: any = [];
+  weatherDataTempMax: any = [];
+  weatherDataTempMin: any = [];
 
-  constructor(private weather: WeatherService) {
-    this.weather.getWeatherData().subscribe(data => {
-      console.log(data);
-    });
-  }
+  constructor(private weather: WeatherService) { }
 
   ngOnInit(): void {
+    this.weather.getWeatherData().subscribe((data: any) => {
+      this.weatherDataTime = data.daily.time;
+      this.weatherDataTempMax = data.daily.temperature_2m_max;
+      this.weatherDataTempMin = data.daily.temperature_2m_min;
+    });
   }
-
 }
