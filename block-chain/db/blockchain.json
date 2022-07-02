@@ -1,0 +1,18 @@
+[
+    {
+        "index": 0,
+        "time": "1997-00-00T00:00:00.000Z",
+        "prev_hash": "",
+        "hash": "",
+        "tx": {
+            "id": "",
+            "inputs": [],
+            "outputs": []
+        },
+        "validator": {
+            "addr": "",
+            "signature": "",
+            "token": 0
+        }
+    }
+]
