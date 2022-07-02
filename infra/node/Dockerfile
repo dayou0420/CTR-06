@@ -5,4 +5,10 @@ RUN apt-get update && \
 
 WORKDIR /src
 
+RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+
+ENV DENO_INSTALL="/root/.deno"
+
+ENV PATH="$DENO_INSTALL/bin:$PATH"
+
 CMD [ "node", "server.js" ]
