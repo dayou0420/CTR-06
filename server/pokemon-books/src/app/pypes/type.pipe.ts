@@ -11,7 +11,17 @@ export class TypePipe implements PipeTransform {
     Poison: 'どく',
     Fire: 'ほのお',
     Flying: 'ひこう',
-    Water: 'みず'
+    Water: 'みず',
+    Bug: 'むし',
+    Normal: 'ノーマル',
+    Electric: 'でんき',
+    Ground: 'じめん',
+    Rock: 'いわ',
+    Ice: 'こおり',
+    Fighting: 'かくとう',
+    Psychic: 'エスパー',
+    Ghost: 'ゴースト',
+    Dragon: 'ドラゴン'
   };
 
   transform(types: string[], ...args: any[]): any {
