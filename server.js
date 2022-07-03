@@ -18,8 +18,8 @@ app.get('/temp', (req, res) => {
 });
 
 // Serve precipitation temperature folder
-app.get('/weather', (req, res) => {
-    res.sendFile(__dirname + '/public/weather/index.html');
+app.get('/pokemon', (req, res) => {
+    res.sendFile(__dirname + '/public/pokemon/index.html');
 });
 
 // Serve your app
