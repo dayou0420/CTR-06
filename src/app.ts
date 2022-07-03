@@ -177,6 +177,39 @@ function autobind(target: any, name: string, descriptor: PropertyDescriptor) {
     }
 }
 
+/**
+ * ProjectItem Class
+ */
+
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+
+    private project: Project;
+
+    get manday() {
+        if (this.project.manday < 20) {
+            return this.project.manday.toString() + ' Man Day';
+        } else {
+            return (this.project.manday / 20).toString() + ' Man month';
+        }
+    }
+
+    constructor(hostId: string, project: Project) {
+        super('single-project', hostId, false, project.id);
+        this.project = project;
+
+        this.configure();
+        this.renderContent();
+    }
+
+    configure() {}
+
+    renderContent() {
+        this.element.querySelector('h2')!.textContent = this.project.title;
+        this.element.querySelector('h3')!.textContent = this.manday;
+        this.element.querySelector('p')!.textContent = this.project.description;
+    }
+}
+
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     assignedProjects: Project[];
 
@@ -214,12 +247,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
         listEl.innerHTML = '';
 
         for (const prjItem of this.assignedProjects) {
-            const listItem = document.createElement('li');
-            listItem.textContent = prjItem.title;
-            /**
-             * listEl.appendChild(listItem);
-             */
-            listEl.appendChild(listItem);
+            new ProjectItem(listEl.id, prjItem);
         }
     }
 }
