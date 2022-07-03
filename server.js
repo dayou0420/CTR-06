@@ -17,6 +17,11 @@ app.get('/temp', (req, res) => {
     res.sendFile(__dirname + '/public/temperature/index.html');
 });
 
+// Serve precipitation temperature folder
+app.get('/weather', (req, res) => {
+    res.sendFile(__dirname + '/public/weather/index.html');
+});
+
 // Serve your app
 console.log('Served: http://localhost:' + port);
 app.listen(port);
