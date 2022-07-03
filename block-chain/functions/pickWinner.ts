@@ -1,27 +1,27 @@
-import { Validator } from "../types/validator.ts";
+import { Validator } from '../types/validator.ts';
 
 export function pickWinner(): Validator {
     const v1: Validator = {
         addr: 'YamadaWallet',
-        signature: 'Test2',
+        signature: 'Check TX.',
         token: 1
     };
 
     const v2: Validator = {
         addr: 'TanakaWallet',
-        signature: 'Test2',
+        signature: 'Check TX.',
         token: 2
     };
 
     const v3: Validator = {
         addr: 'SaitoWallet',
-        signature: 'Test2',
+        signature: 'Check TX.',
         token: 3
     };
 
     const v4: Validator = {
         addr: 'WatanabeWallet',
-        signature: 'Test2',
+        signature: 'Check TX.',
         token: 4
     };
 

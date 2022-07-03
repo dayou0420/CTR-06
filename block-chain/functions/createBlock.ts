@@ -1,7 +1,7 @@
-import { Block } from "../types/block.ts";
-import { Tx } from "../types/tx.ts";
-import { Validator } from "../types/validator.ts";
-import { calcBlockHash } from "./calcBlockHash.ts";
+import { Block } from '../types/block.ts';
+import { Tx } from '../types/tx.ts';
+import { Validator } from '../types/validator.ts';
+import { calcBlockHash } from './calcBlockHash.ts';
 
 export async function createBlock(
         prevBlock: Block,

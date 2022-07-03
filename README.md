@@ -16,3 +16,7 @@ ng serve --host 0.0.0.0
 ```
 rm -rf .git
 ```
+
+```
+deno run --allow-read --allow-write main.ts
+```

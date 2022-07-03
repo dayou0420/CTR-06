@@ -1,5 +1,5 @@
-import { Tx } from "../types/tx.ts";
-import { Validator } from "../types/validator.ts";
+import { Tx } from '../types/tx.ts';
+import { Validator } from '../types/validator.ts';
 
 export async function hash(str: string): Promise<string> {
     const u8Ary = new TextEncoder().encode(str);

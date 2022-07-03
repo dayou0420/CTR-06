@@ -1,6 +1,6 @@
-import { Input } from "../types/input.ts";
-import { Output } from "../types/output.ts";
-import { Tx } from "../types/tx.ts";
+import { Input } from '../types/input.ts';
+import { Output } from '../types/output.ts';
+import { Tx } from '../types/tx.ts';
 
 export function createTx(): Tx {
     const txId = crypto.randomUUID();
@@ -10,7 +10,7 @@ export function createTx(): Tx {
         {
             time: now,
             from: 'TaroWallet',
-            signature: 'Test'
+            signature: 'Taro. I confirm to send coin to Hanako.'
         }
     ];
 
