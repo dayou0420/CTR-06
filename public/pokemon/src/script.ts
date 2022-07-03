@@ -1,21 +1,15 @@
-// const https = 'https://api.open-meteo.com/v1/forecast?latitude=';
-// const latitude = 35.6092;
-// const longitude = 139.7303;
-// const temperatureMax = 'temperature_2m_max';
-// const temperatureMin = 'temperature_2m_min';
-// const apparentTemperatureMax = 'apparent_temperature_max';
-// const apparentTemperatureMin = 'apparent_temperature_min';
-// const timezone = 'Asia%2FTokyo';
-// const link 
-//     = `${https}${latitude}&longitude=${longitude}&daily=${temperatureMax},${temperatureMin},${apparentTemperatureMax},${apparentTemperatureMin}&timezone=${timezone}`;
+import { Pokemons } from './pokemons';
+import { PokemonArray } from './types/pokemon';
 
-async function fetchJson(file: any) {
-    const response = await fetch(file);
-    const json = await response.json();
-    return json;
-}
-
-(async() => {
-    const json = await fetchJson('./json/pokemons.json');
-    console.log(json);
-})();
+Pokemons.map((v, i) => {
+    const list = `
+    <td>${v.id}</td>
+    <td>${v.name.japanese}</td>
+    <td><img src="./sprites/00${i+1}MS.png" alt=""></td>
+    <td><img src="./sprites/0${i+1}MS.png" alt=""></td>
+    <td><img src="./sprites/${i+1}MS.png" alt=""></td>
+    `
+    const trElement = document.createElement('tr')! as HTMLTableRowElement;
+    trElement.innerHTML = list;
+    document.querySelector('tbody')?.appendChild(trElement);
+});
