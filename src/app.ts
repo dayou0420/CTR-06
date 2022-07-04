@@ -1,3 +1,18 @@
+/***
+ * Drag & Drop
+ */
+
+interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+    dragEndHandler(event: DragEvent): void;
+}
+
+interface DragTarget {
+    dragOverHandler(event: DragEvent): void;
+    dragHandler(): void;
+    dragLeaveHandler(): void;
+}
+
 /**
  * Project Type
  */
@@ -181,7 +196,9 @@ function autobind(target: any, name: string, descriptor: PropertyDescriptor) {
  * ProjectItem Class
  */
 
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>
+
+    implements Draggable {
 
     private project: Project;
 
@@ -198,10 +215,23 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
         this.project = project;
 
         this.configure();
+
         this.renderContent();
     }
 
-    configure() {}
+    @autobind
+    dragStartHandler(event: DragEvent) {
+        console.log(event);
+    }
+
+    dragEndHandler(_: DragEvent) {
+        console.log('Drag End');
+    }
+
+    configure() {
+        this.element.addEventListener('dragstart', this.dragStartHandler);
+        this.element.addEventListener('dragend', this.dragEndHandler);
+    }
 
     renderContent() {
         this.element.querySelector('h2')!.textContent = this.project.title;
