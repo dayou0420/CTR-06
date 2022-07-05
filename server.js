@@ -17,11 +17,6 @@ app.get('/temp', (req, res) => {
     res.sendFile(__dirname + '/public/temperature/index.html');
 });
 
-// Serve precipitation temperature folder
-app.get('/pokemon', (req, res) => {
-    res.sendFile(__dirname + '/public/pokemon/index.html');
-});
-
 // Serve your app
 console.log('Served: http://localhost:' + port);
 app.listen(port);

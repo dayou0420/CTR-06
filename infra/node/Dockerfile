@@ -7,6 +7,8 @@ WORKDIR /src
 
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
+RUN npm install -g npm@latest
+
 ENV DENO_INSTALL="/root/.deno"
 
 ENV PATH="$DENO_INSTALL/bin:$PATH"
