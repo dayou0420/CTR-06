@@ -197,7 +197,6 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
  */
 
 class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>
-
     implements Draggable {
 
     private project: Project;
@@ -221,7 +220,8 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>
 
     @autobind
     dragStartHandler(event: DragEvent) {
-        console.log(event);
+        event.dataTransfer!.setData('text/plain', this.project.id);
+        event.dataTransfer!.effectAllowed = 'move';
     }
 
     dragEndHandler(_: DragEvent) {
@@ -241,7 +241,6 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>
 }
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement>
-
     implements DragTarget {
 
     assignedProjects: Project[];
@@ -255,12 +254,18 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>
     }
 
     @autobind
-    dragOverHandler(_: DragEvent) {
-        const listEl = this.element.querySelector('ul')!;
-        listEl.classList.add('droppable');
+    dragOverHandler(event: DragEvent) {
+        if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+            event.preventDefault();
+
+            const listEl = this.element.querySelector('ul')!;
+            listEl.classList.add('droppable');
+        }
     }
 
-    dropHandler(_: DragEvent) {}
+    dropHandler(event: DragEvent) {
+        console.log(event.dataTransfer!.getData('text/plain'));
+    }
 
     @autobind
     dragLeaveHandler(_: DragEvent) {
@@ -370,6 +375,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     private submitHandler(event: Event) {
         event.preventDefault();
         const userInput = this.getherUserInput();
+
         if (Array.isArray(userInput)) {
             const [title, description, manday] = userInput ;
             projectState.addProject(title, description, manday);
