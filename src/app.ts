@@ -40,3 +40,14 @@ enum Character {
 }
 
 console.log(Character.Bob);
+
+var something: any = 'foo';
+something = 100;
+something = true;
+something = { id: 1 };
+
+var el: Element | null = document.querySelector('#app');
+var foo: undefined = undefined;
+
+var unkown = 'string';
+//unkown = 10;
