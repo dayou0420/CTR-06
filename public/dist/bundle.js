@@ -36,6 +36,14 @@ var Character;
     Character[Character["Mam"] = 2] = "Mam";
 })(Character || (Character = {}));
 console.log(Character.Bob);
+var something = 'foo';
+something = 100;
+something = true;
+something = { id: 1 };
+var el = document.querySelector('#app');
+var foo = undefined;
+var unkown = 'string';
+//unkown = 10;
 
 /******/ })()
 ;
