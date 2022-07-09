@@ -1,0 +1,20 @@
+.clock {
+    color: blue;
+}
+.msg, .error {
+    margin-left: 1em;
+}
+.error {
+    color: red;
+}
+.completed {
+    color: green;
+}
+#logs {
+    margin-top: 1em;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.75em;
+}
+#canvas {
+    background-color: lightblue;
+}
