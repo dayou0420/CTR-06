@@ -1,7 +1,4 @@
 .DS_Store
-/node_modules/*
-!/node_modules/rxjs/
-!/node_modules/@rgrueneis/
 /dist
 coverage
 
