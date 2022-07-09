@@ -1,9 +1,5 @@
 .DS_Store
-/node_modules/*
-!/node_modules/rxjs/dist/bundles/rxjs.umd.min.js
-!/node_modules/rxjs/rgrueneis/rxjs-visualizer/rxjs.visualizer.umd.min.js
 
-/dist
 coverage
 
 # local env files
