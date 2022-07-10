@@ -5,45 +5,13 @@ var __webpack_exports__ = {};
   !*** ./src/app.ts ***!
   \********************/
 
-var titile = 'Angular';
-titile = 'Angular!';
-var n = 9;
-var isOpen = true;
-var keywords = ['name', 'email', 'body', 0];
-var payment = [1, 'apple', 0];
-var object = { name: 'bob', id: 'test' };
-var post = [{ id: 12, content: 'lorem ipsum' }];
-var sample;
-sample = 'Bob';
-sample = 100;
-sample = true;
-var KeyCode;
-(function (KeyCode) {
-    KeyCode[KeyCode["BackSpace"] = 8] = "BackSpace";
-})(KeyCode || (KeyCode = {}));
-console.log(KeyCode.BackSpace);
-var ErrorCode;
-(function (ErrorCode) {
-    ErrorCode[ErrorCode["OK"] = 200] = "OK";
-    ErrorCode[ErrorCode["BAD_RESPONSE"] = 400] = "BAD_RESPONSE";
-    ErrorCode[ErrorCode["UNAUTHORIZED"] = 401] = "UNAUTHORIZED";
-})(ErrorCode || (ErrorCode = {}));
-console.log(ErrorCode.OK);
-var Character;
-(function (Character) {
-    Character[Character["Bob"] = 0] = "Bob";
-    Character[Character["Dad"] = 1] = "Dad";
-    Character[Character["Mam"] = 2] = "Mam";
-})(Character || (Character = {}));
-console.log(Character.Bob);
-var something = 'foo';
-something = 100;
-something = true;
-something = { id: 1 };
-var el = document.querySelector('#app');
-var foo = undefined;
-var unkown = 'string';
-//unkown = 10;
+function add(n1, n2) {
+    return n1 + n2;
+}
+const number1 = 5;
+const number2 = 2.8;
+const result = add(number1, number2);
+console.log(result);
 
 /******/ })()
 ;
