@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '../member';
 import { MemberService } from '../member.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-member-detail',
@@ -25,5 +26,9 @@ export class MemberDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.memberService.getMember(id)
       .subscribe(member => this.member = member);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
