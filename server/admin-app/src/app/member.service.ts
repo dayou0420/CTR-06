@@ -15,4 +15,10 @@ export class MemberService {
     this.messageService.add('MemberService: 社員一覧データを取得しました')
     return of(MEMBERS);
   }
+
+  getMember(id: number): Observable<Member> {
+    const member = MEMBERS.find(member => member.id === id)!;
+    this.messageService.add(`MessageService: 社員データ(id=${id})を取得しました`);
+    return of(member);
+  }
 }
