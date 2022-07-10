@@ -20,3 +20,7 @@ rm -rf .git
 ```
 deno run --allow-read --allow-write main.ts
 ```
+
+```
+ng serve --host 0.0.0.0 --port 4201
+```

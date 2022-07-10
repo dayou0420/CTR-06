@@ -9,10 +9,18 @@ services:
     stdin_open: true
     tty: true
 
-  angular:
-    build: ./infra/angular
+  ng:
+    build: ./infra/ng
     ports:
       - '4200:4200'
+    volumes:
+      - './server:/src'
+    tty: true
+
+  rx:
+    build: ./infra/rx
+    ports:
+      - '4201:4201'
     volumes:
       - './server:/src'
     tty: true
