@@ -9458,7 +9458,16 @@ var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
-(0, rxjs_1.fromEvent)(document, 'click').subscribe(() => console.log('Clicked!'));
+const observable = new rxjs_1.Observable((observer) => {
+    observer.next('Hey guys!');
+});
+observable.subscribe((x) => addItem(x));
+function addItem(val) {
+    const node = document.createElement('li');
+    const textNode = document.createTextNode(val);
+    node.appendChild(textNode);
+    document.getElementById('output').appendChild(node);
+}
 
 })();
 

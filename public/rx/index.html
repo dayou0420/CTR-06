@@ -7,13 +7,29 @@
         <script src="node_modules/rxjs/dist/bundles/rxjs.umd.min.js"></script>
         <script src="node_modules/@rgrueneis/rxjs-visualizer/rxjs.visualizer.umd.min.js"></script>
         <script src="./index.js"></script>
-        <script src="./dist/bundle.js"></script>
         <link rel="stylesheet" type="text/css" href="./index.css">
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background: #ececec;
+            }
+            ul {
+                list-style-type: none;
+                padding: 20px;
+            }
+            li {
+                padding: 20px;
+                background: #ffff;
+                margin-bottom: 5px;
+            }
+        </style>
     </head>
     <body>
+        <ul id="output"></ul>
         <canvas id="canvas"
             width="700"
             height="300"></canvas>
         <div id="logs">Output comes here</div>
+        <script src="./dist/bundle.js"></script>
     </body>
 </html>
