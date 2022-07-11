@@ -22,4 +22,12 @@ export class MembersComponent implements OnInit {
       .subscribe(member => this.members = member);
   }
 
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.memberService.addMember({ name } as Member)
+      .subscribe(member => {
+        this.members.push(member);
+      });
+  }
 }
