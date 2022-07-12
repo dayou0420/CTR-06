@@ -9459,9 +9459,25 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
 const observable = new rxjs_1.Observable((observer) => {
-    observer.next('Hey guys!');
+    try {
+        observer.next('Hey guys!');
+        observer.next('How are you?');
+        setInterval(() => {
+            observer.next('I am good');
+        }, 2000);
+        // observer.complete();
+        // observer.next('This will not send');
+    }
+    catch (err) {
+        observer.error(err);
+    }
 });
-observable.subscribe((x) => addItem(x));
+const observer = observable.subscribe((x) => addItem(x), (error) => addItem(error), () => addItem('Completed'));
+const observer2 = observable.subscribe((x) => addItem(x));
+observer.add(observer2);
+setTimeout(() => {
+    observer.unsubscribe();
+}, 6001);
 function addItem(val) {
     const node = document.createElement('li');
     const textNode = document.createTextNode(val);
