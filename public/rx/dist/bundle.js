@@ -9472,8 +9472,14 @@ const observable = new rxjs_1.Observable((observer) => {
         observer.error(err);
     }
 });
-const observer = observable.subscribe((x) => addItem(x), (error) => addItem(error), () => addItem('Completed'));
-const observer2 = observable.subscribe((x) => addItem(x));
+const observer = observable.subscribe({
+    next: (x) => addItem(x),
+    error: (error) => addItem(error),
+    complete: () => addItem('Completed')
+});
+const observer2 = observable.subscribe({
+    next: (x) => addItem(x),
+});
 observer.add(observer2);
 setTimeout(() => {
     observer.unsubscribe();
