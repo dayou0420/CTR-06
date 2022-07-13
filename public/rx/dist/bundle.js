@@ -9458,43 +9458,33 @@ var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
-// const observable = new Observable<string>((observer: any) => {
-//     try {
-//             observer.next('Hey guys!');
-//             observer.next('How are you?');
-//             setInterval(() => {
-//                 observer.next('I am good');
-//             }, 2000);
-//             // observer.complete();
-//             // observer.next('This will not send');
-//         } catch (err) {
-//             observer.error(err);
-//     }
-// });
-// const observer = observable.subscribe({
-//     next: (x: any) => addItem(x),
-//     error: (error: any) => addItem(error),
-//     complete: () => addItem('Completed')
-// });
-// setTimeout(() => {
-//     observer.unsubscribe();
-//     const observer2 = observable.subscribe({
-//         next: (x: any) => addItem(`Subscribe2 ${x}`)
-//     })
-// }, 1000);
-// const observer2 = observable.subscribe({
-//     next: (x: any) => addItem(x),
-// });
-// observer.add(observer2);
-// setTimeout(() => {
-//     observer.unsubscribe();
-// }, 6001);
-const observable = (0, rxjs_1.fromEvent)(document, 'mousemove');
+const someObservable$ = new rxjs_1.Observable(subscriber => {
+    subscriber.next('Alice');
+    subscriber.next('Ben');
+    subscriber.next('Charlie');
+    subscriber.complete();
+});
+someObservable$.subscribe(value => console.log(value));
+const observable = new rxjs_1.Observable((observer) => {
+    try {
+        observer.next('Hey guys!');
+        observer.next('How are you?');
+        setInterval(() => {
+            observer.next('I am good');
+        }, 2000);
+    }
+    catch (err) {
+        observer.error(err);
+    }
+});
+const observer = observable.subscribe({
+    next: (x) => addItem(x),
+    error: (error) => addItem(error),
+    complete: () => addItem('Completed')
+});
 setTimeout(() => {
-    const subscription = observable.subscribe({
-        next: (x) => addItem(x)
-    });
-}, 2000);
+    observer.unsubscribe();
+}, 6001);
 function addItem(val) {
     const node = document.createElement('li');
     const textNode = document.createTextNode(val);

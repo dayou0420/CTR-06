@@ -1,57 +1,41 @@
 import { Observable } from 'rxjs';
-import { fromEvent } from 'rxjs';
 
-// const observable = new Observable<string>((observer: any) => {
-//     try {
-//             observer.next('Hey guys!');
-//             observer.next('How are you?');
+const someObservable$ = new Observable<string>(subscriber => {
+  subscriber.next('Alice');
+  subscriber.next('Ben');
+  subscriber.next('Charlie');
+  subscriber.complete();
+});
 
-//             setInterval(() => {
-//                 observer.next('I am good');
-//             }, 2000);
+someObservable$.subscribe(value => console.log(value));
 
-//             // observer.complete();
-//             // observer.next('This will not send');
+const observable = new Observable<string>((observer: any) => {
+    try {
+            observer.next('Hey guys!');
+            observer.next('How are you?');
 
-//         } catch (err) {
-//             observer.error(err);
-//     }
-// });
+            setInterval(() => {
+                observer.next('I am good');
+            }, 2000);
 
-// const observer = observable.subscribe({
-//     next: (x: any) => addItem(x),
-//     error: (error: any) => addItem(error),
-//     complete: () => addItem('Completed')
-// });
+        } catch (err) {
+            observer.error(err);
+    }
+});
 
-// setTimeout(() => {
-//     observer.unsubscribe();
-//     const observer2 = observable.subscribe({
-//         next: (x: any) => addItem(`Subscribe2 ${x}`)
-//     })
-// }, 1000);
-
-// const observer2 = observable.subscribe({
-//     next: (x: any) => addItem(x),
-// });
-
-// observer.add(observer2);
-
-// setTimeout(() => {
-//     observer.unsubscribe();
-// }, 6001);
-
-const observable = fromEvent(document, 'mousemove');
+const observer = observable.subscribe({
+    next: (x: any) => addItem(x),
+    error: (error: any) => addItem(error),
+    complete: () => addItem('Completed')
+});
 
 setTimeout(() => {
-    const subscription = observable.subscribe({
-        next: (x: any) => addItem(x)
-    });
-}, 2000);
+    observer.unsubscribe();
+}, 6001);
 
 function addItem(val: string) {
-    const node = document.createElement('li');
-    const textNode = document.createTextNode(val);
-    node.appendChild(textNode);
-    document.getElementById('output')!.appendChild(node);
+  const node = document.createElement('li');
+  const textNode = document.createTextNode(val);
+  node.appendChild(textNode);
+  document.getElementById('output')!.appendChild(node);
 }

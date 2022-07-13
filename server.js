@@ -17,7 +17,7 @@ app.get('/temp', (req, res) => {
     res.sendFile(__dirname + '/public/temperature/index.html');
 });
 
-// Serve precipitation temperature folder
+// Serve RxJS temperature folder
 app.get('/rx', (req, res) => {
     res.sendFile(__dirname + '/public/rx/index.html');
 });
