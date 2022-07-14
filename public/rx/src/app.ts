@@ -1,5 +1,12 @@
 import { Observable } from 'rxjs';
 
+import { fromFetch } from 'rxjs/fetch';
+import { switchMap, of, catchError } from 'rxjs';
+
+/**
+ * RxJS 7
+ */
+
 const someObservable$ = new Observable<string>(subscriber => {
   subscriber.next('Alice');
   subscriber.next('Ben');
@@ -8,6 +15,37 @@ const someObservable$ = new Observable<string>(subscriber => {
 });
 
 someObservable$.subscribe(value => console.log(value));
+
+
+/**
+ * fromFetch content
+ */
+
+const data$ = fromFetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').pipe(
+    switchMap(response => {
+        if (response.ok) {
+            // OK return data
+            return response.json();
+        } else {
+            // Server is returning a status requiring the client to try something else.
+            return of({ error: true, message: `Error ${ response.status }` });
+        }
+    }),
+    catchError(err => {
+        // Network or other error, handle appropriately
+        console.error(err);
+        return of({ error: true, message: err.message })
+    })
+);
+
+data$.subscribe({
+    next: result => console.log(result),
+    complete: () => console.log('done')
+});
+
+/**
+ * DOM content
+ */
 
 const observable = new Observable<string>((observer: any) => {
     try {
