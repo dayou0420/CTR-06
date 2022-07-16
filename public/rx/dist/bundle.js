@@ -9566,13 +9566,30 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 /**
  * RxJS 7
  */
-const someObservable$ = new rxjs_1.Observable(subscriber => {
+// const someObservable$ = new Observable<string>(subscriber => {
+//   subscriber.next('Alice');
+//   subscriber.next('Ben');
+//   subscriber.next('Charlie');
+//   subscriber.complete();
+// });
+// someObservable$.subscribe(value => console.log(value));
+const observable$ = new rxjs_1.Observable(subscriber => {
+    console.log('Observable executed');
     subscriber.next('Alice');
     subscriber.next('Ben');
     subscriber.next('Charlie');
-    subscriber.complete();
 });
-someObservable$.subscribe(value => console.log(value));
+const observer = {
+    next: (value) => addItem(value),
+};
+observable$.subscribe(observer);
+function addItem(val) {
+    const node = document.createElement('li');
+    const textNode = document.createTextNode(val);
+    node.appendChild(textNode);
+    document.getElementById('output').appendChild(node);
+    console.log(val);
+}
 /**
  * fromFetch content
  */
@@ -9589,40 +9606,43 @@ const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=15
     // Network or other error, handle appropriately
     console.error(err);
     return (0, rxjs_2.of)({ error: true, message: err.message });
+})).pipe((0, rxjs_2.map)((value) => {
+    return value;
+}), (0, rxjs_2.map)((value) => {
+    return value.results;
 }));
 data$.subscribe({
-    next: result => console.log(result),
-    complete: () => console.log('done')
+    next: result => addItem(result),
+    complete: () => addItem('done')
 });
 /**
  * DOM content
  */
-const observable = new rxjs_1.Observable((observer) => {
-    try {
-        observer.next('Hey guys!');
-        observer.next('How are you?');
-        setInterval(() => {
-            observer.next('I am good');
-        }, 2000);
-    }
-    catch (err) {
-        observer.error(err);
-    }
-});
-const observer = observable.subscribe({
-    next: (x) => addItem(x),
-    error: (error) => addItem(error),
-    complete: () => addItem('Completed')
-});
-setTimeout(() => {
-    observer.unsubscribe();
-}, 6001);
-function addItem(val) {
-    const node = document.createElement('li');
-    const textNode = document.createTextNode(val);
-    node.appendChild(textNode);
-    document.getElementById('output').appendChild(node);
-}
+// const observable = new Observable<string>((observer: any) => {
+//     try {
+//             observer.next('Hey guys!');
+//             observer.next('How are you?');
+//             setInterval(() => {
+//                 observer.next('I am good');
+//             }, 2000);
+//         } catch (err) {
+//             observer.error(err);
+//     }
+// });
+// const observer = observable.subscribe({
+//     next: (x: any) => addItem(x),
+//     error: (error: any) => addItem(error),
+//     complete: () => addItem('Completed')
+// });
+// setTimeout(() => {
+//     observer.unsubscribe();
+// }, 6001);
+// function addItem(val: string) {
+//   const node = document.createElement('li');
+//   const textNode = document.createTextNode(val);
+//   node.appendChild(textNode);
+//   document.getElementById('output')!.appendChild(node);
+// }
 
 })();
 
