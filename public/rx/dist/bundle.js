@@ -9606,11 +9606,7 @@ const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=15
     // Network or other error, handle appropriately
     console.error(err);
     return (0, rxjs_2.of)({ error: true, message: err.message });
-})).pipe((0, rxjs_2.map)((value) => {
-    return value;
-}), (0, rxjs_2.map)((value) => {
-    return value.results;
-}));
+})).pipe((0, rxjs_2.map)((value) => value), (0, rxjs_2.map)((value) => value.results), (0, rxjs_2.map)((value) => value[150].name));
 data$.subscribe({
     next: result => addItem(result),
     complete: () => addItem('done')

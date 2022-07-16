@@ -57,12 +57,9 @@ const data$ = fromFetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').
         return of({ error: true, message: err.message })
     })
 ).pipe(
-    map((value) => {
-        return value;
-    }),
-    map((value) => {
-        return value.results;
-    })
+    map((value) => value),
+    map((value) => value.results),
+    map((value) => value[150].name)
 );
 
 data$.subscribe({
