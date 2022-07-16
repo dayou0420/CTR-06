@@ -24,7 +24,9 @@ const observable$ = new Observable<string> (subscriber => {
 });
 
 const observer = {
-    next: (value: string) => addItem(value),
+    next: (value: string) => {
+        console.log(value);
+    },
 };
 
 observable$.subscribe(observer);
@@ -34,7 +36,6 @@ function addItem(val: string) {
     const textNode = document.createTextNode(val);
     node.appendChild(textNode);
     document.getElementById('output')!.appendChild(node);
-    console.log(val);
 }
 
 /**
@@ -57,14 +58,18 @@ const data$ = fromFetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').
         return of({ error: true, message: err.message })
     })
 ).pipe(
-    map((value) => value),
-    map((value) => value.results),
-    map((value) => value[150].name)
+    map(value => value),
+    map(value => value.results)
 );
 
 data$.subscribe({
-    next: result => addItem(result),
-    complete: () => addItem('done')
+    next: result => {
+        for (const pokemon of result) {
+            addItem(pokemon.name);
+        }
+        console.log(result);
+    },
+    complete: () => addItem('done: 151')
 });
 
 /**

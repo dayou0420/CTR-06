@@ -9580,7 +9580,9 @@ const observable$ = new rxjs_1.Observable(subscriber => {
     subscriber.next('Charlie');
 });
 const observer = {
-    next: (value) => addItem(value),
+    next: (value) => {
+        console.log(value);
+    },
 };
 observable$.subscribe(observer);
 function addItem(val) {
@@ -9588,7 +9590,6 @@ function addItem(val) {
     const textNode = document.createTextNode(val);
     node.appendChild(textNode);
     document.getElementById('output').appendChild(node);
-    console.log(val);
 }
 /**
  * fromFetch content
@@ -9606,10 +9607,15 @@ const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=15
     // Network or other error, handle appropriately
     console.error(err);
     return (0, rxjs_2.of)({ error: true, message: err.message });
-})).pipe((0, rxjs_2.map)((value) => value), (0, rxjs_2.map)((value) => value.results), (0, rxjs_2.map)((value) => value[150].name));
+})).pipe((0, rxjs_2.map)(value => value), (0, rxjs_2.map)(value => value.results));
 data$.subscribe({
-    next: result => addItem(result),
-    complete: () => addItem('done')
+    next: result => {
+        for (const pokemon of result) {
+            addItem(pokemon.name);
+        }
+        console.log(result);
+    },
+    complete: () => addItem('done: 151')
 });
 /**
  * DOM content
