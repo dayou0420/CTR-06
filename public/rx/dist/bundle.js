@@ -9569,6 +9569,8 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 const observable$ = new rxjs_1.Observable(subscriber => {
     console.log('Observable executed');
     subscriber.next('Alice');
+    subscriber.next('Ben');
+    setTimeout(() => subscriber.next('Charlie'), 2000);
 });
 console.log('Before subscribe');
 observable$.subscribe(value => console.log(value));
