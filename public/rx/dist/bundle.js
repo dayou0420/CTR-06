@@ -9566,6 +9566,18 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 /**
  * RxJS 7
  */
+const observable$ = new rxjs_1.Observable(subscriber => {
+    console.log('Observable executed');
+    subscriber.next('Alice');
+    setTimeout(() => subscriber.next('Ben'), 2000);
+    setTimeout(() => subscriber.next('Charlie'), 4000);
+});
+console.log('Subscrition 1 start');
+observable$.subscribe(value => console.log('Subscriotion 1:', value));
+setTimeout(() => {
+    console.log('Subscrition 2 start');
+    observable$.subscribe(value => console.log('Subscriotion 2:', value));
+}, 1000);
 // const someObservable$ = new Observable<string>(subscriber => {
 //   subscriber.next('Alice');
 //   subscriber.next('Ben');
@@ -9573,24 +9585,17 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 //   subscriber.complete();
 // });
 // someObservable$.subscribe(value => console.log(value));
-const observable$ = new rxjs_1.Observable(subscriber => {
-    console.log('Observable executed');
-    subscriber.next('Alice');
-    subscriber.next('Ben');
-    subscriber.next('Charlie');
-});
-const observer = {
-    next: (value) => {
-        console.log(value);
-    },
-};
-observable$.subscribe(observer);
-function addItem(val) {
-    const node = document.createElement('li');
-    const textNode = document.createTextNode(val);
-    node.appendChild(textNode);
-    document.getElementById('output').appendChild(node);
-}
+// const observer = {
+//     next: (value: any) => console.log(value)
+// }
+// observable$.subscribe({
+//     next: (value: any) => console.log(value)
+// });
+// const subscription = observable$.subscribe(value => console.log(value));
+// setTimeout(() => {
+//     console.log('Unsubscribe');
+//     subscription.unsubscribe();
+// }, 3000);
 /**
  * fromFetch content
  */
@@ -9609,14 +9614,17 @@ const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=15
     return (0, rxjs_2.of)({ error: true, message: err.message });
 })).pipe((0, rxjs_2.map)(value => value), (0, rxjs_2.map)(value => value.results));
 data$.subscribe({
-    next: result => {
-        for (const pokemon of result) {
-            addItem(pokemon.name);
-        }
-        console.log(result);
-    },
+    next: result => { for (const pokemon of result) {
+        addItem(pokemon.name);
+    } },
     complete: () => addItem('done: 151')
 });
+function addItem(val) {
+    const node = document.createElement('li');
+    const textNode = document.createTextNode(val);
+    node.appendChild(textNode);
+    document.getElementById('output').appendChild(node);
+}
 /**
  * DOM content
  */

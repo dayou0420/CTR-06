@@ -7,8 +7,8 @@ window.onload = () => {
       logDivId: 'logs'
     });
 
-    RxJsVisualizer.prepareCanvas(['values']);
+    RxJsVisualizer.prepareCanvas(['seq']);
     RxJsVisualizer.startVisualize();
-    RxJsVisualizer.createStreamFromArraySequence([10, 11, 12, 13, 14])
-      .subscribe(RxJsVisualizer.observerForLine(0, 'value', true));
+    RxJsVisualizer.createStreamFromArraySequence(['a', 'b', 'c'])
+        .subscribe(RxJsVisualizer.observerForLine(0, 'seq'));
 };

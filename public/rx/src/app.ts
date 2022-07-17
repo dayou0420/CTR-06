@@ -7,6 +7,21 @@ import { switchMap, of, catchError, map } from 'rxjs';
  * RxJS 7
  */
 
+const observable$ = new Observable<string> (subscriber => {
+    console.log('Observable executed');
+    subscriber.next('Alice');
+    setTimeout(() => subscriber.next('Ben'), 2000);
+    setTimeout(() => subscriber.next('Charlie'), 4000);
+});
+
+console.log('Subscrition 1 start');
+observable$.subscribe(value => console.log('Subscriotion 1:', value));
+
+setTimeout(() => {
+    console.log('Subscrition 2 start');
+    observable$.subscribe(value => console.log('Subscriotion 2:', value));
+}, 1000);
+
 // const someObservable$ = new Observable<string>(subscriber => {
 //   subscriber.next('Alice');
 //   subscriber.next('Ben');
@@ -16,27 +31,20 @@ import { switchMap, of, catchError, map } from 'rxjs';
 
 // someObservable$.subscribe(value => console.log(value));
 
-const observable$ = new Observable<string> (subscriber => {
-    console.log('Observable executed');
-    subscriber.next('Alice');
-    subscriber.next('Ben');
-    subscriber.next('Charlie');
-});
+// const observer = {
+//     next: (value: any) => console.log(value)
+// }
 
-const observer = {
-    next: (value: string) => {
-        console.log(value);
-    },
-};
+// observable$.subscribe({
+//     next: (value: any) => console.log(value)
+// });
 
-observable$.subscribe(observer);
+// const subscription = observable$.subscribe(value => console.log(value));
 
-function addItem(val: string) {
-    const node = document.createElement('li');
-    const textNode = document.createTextNode(val);
-    node.appendChild(textNode);
-    document.getElementById('output')!.appendChild(node);
-}
+// setTimeout(() => {
+//     console.log('Unsubscribe');
+//     subscription.unsubscribe();
+// }, 3000);
 
 /**
  * fromFetch content
@@ -63,14 +71,16 @@ const data$ = fromFetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').
 );
 
 data$.subscribe({
-    next: result => {
-        for (const pokemon of result) {
-            addItem(pokemon.name);
-        }
-        console.log(result);
-    },
+    next: result => { for (const pokemon of result) { addItem(pokemon.name);} },
     complete: () => addItem('done: 151')
 });
+
+function addItem(val: string) {
+    const node = document.createElement('li');
+    const textNode = document.createTextNode(val);
+    node.appendChild(textNode);
+    document.getElementById('output')!.appendChild(node);
+}
 
 /**
  * DOM content
