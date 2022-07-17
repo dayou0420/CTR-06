@@ -7,20 +7,31 @@ import { switchMap, of, catchError, map } from 'rxjs';
  * RxJS 7
  */
 
-const observable$ = new Observable<string> (subscriber => {
+const observable$ = new Observable<string>(subscriber => {
     console.log('Observable executed');
     subscriber.next('Alice');
-    setTimeout(() => subscriber.next('Ben'), 2000);
-    setTimeout(() => subscriber.next('Charlie'), 4000);
 });
 
-console.log('Subscrition 1 start');
-observable$.subscribe(value => console.log('Subscriotion 1:', value));
+console.log('Before subscribe');
+observable$.subscribe(value => console.log(value));
+console.log('After subscribe');
 
-setTimeout(() => {
-    console.log('Subscrition 2 start');
-    observable$.subscribe(value => console.log('Subscriotion 2:', value));
-}, 1000);
+// const observable$ = new Observable<string> (subscriber => {
+//     console.log('Observable executed');
+//     subscriber.next('Alice');
+//     setTimeout(() => subscriber.next('Ben'), 2000);
+//     setTimeout(() => subscriber.next('Charlie'), 4000);
+// });
+
+// console.log(observable$);
+
+// console.log('Subscrition 1 start');
+// observable$.subscribe(value => console.log('Subscriotion 1:', value));
+
+// setTimeout(() => {
+//     console.log('Subscrition 2 start');
+//     observable$.subscribe(value => console.log('Subscriotion 2:', value));
+// }, 1000);
 
 // const someObservable$ = new Observable<string>(subscriber => {
 //   subscriber.next('Alice');

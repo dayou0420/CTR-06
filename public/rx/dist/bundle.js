@@ -9569,15 +9569,23 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 const observable$ = new rxjs_1.Observable(subscriber => {
     console.log('Observable executed');
     subscriber.next('Alice');
-    setTimeout(() => subscriber.next('Ben'), 2000);
-    setTimeout(() => subscriber.next('Charlie'), 4000);
 });
-console.log('Subscrition 1 start');
-observable$.subscribe(value => console.log('Subscriotion 1:', value));
-setTimeout(() => {
-    console.log('Subscrition 2 start');
-    observable$.subscribe(value => console.log('Subscriotion 2:', value));
-}, 1000);
+console.log('Before subscribe');
+observable$.subscribe(value => console.log(value));
+console.log('After subscribe');
+// const observable$ = new Observable<string> (subscriber => {
+//     console.log('Observable executed');
+//     subscriber.next('Alice');
+//     setTimeout(() => subscriber.next('Ben'), 2000);
+//     setTimeout(() => subscriber.next('Charlie'), 4000);
+// });
+// console.log(observable$);
+// console.log('Subscrition 1 start');
+// observable$.subscribe(value => console.log('Subscriotion 1:', value));
+// setTimeout(() => {
+//     console.log('Subscrition 2 start');
+//     observable$.subscribe(value => console.log('Subscriotion 2:', value));
+// }, 1000);
 // const someObservable$ = new Observable<string>(subscriber => {
 //   subscriber.next('Alice');
 //   subscriber.next('Ben');
