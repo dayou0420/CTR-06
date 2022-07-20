@@ -9570,10 +9570,11 @@ const observable$ = new rxjs_1.Observable(subscriber => {
     console.log('Observable executed');
     subscriber.next('Alice');
     subscriber.next('Ben');
+    setTimeout(() => subscriber.error(new Error('Failure')), 2000);
     setTimeout(() => {
         subscriber.next('Charlie');
-    }, 2000);
-    setTimeout(() => subscriber.error(new Error('Failure')), 4000);
+        subscriber.complete();
+    }, 4000);
     return () => {
         console.log('Teardown');
     };
