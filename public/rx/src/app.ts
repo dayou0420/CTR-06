@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax'
 
 import { fromFetch } from 'rxjs/fetch';
 import { switchMap, of, catchError, map } from 'rxjs';
@@ -7,25 +8,39 @@ import { switchMap, of, catchError, map } from 'rxjs';
  * RxJS 7
  */
 
-const interval$ = new Observable<number>(subscriber => {
-    let counter = 1;
+const ajax$ = ajax<any>('https://random-data-api.com/api/name/random_name');
 
-    const intervalId = setInterval(() => {
-        console.log('Emitted', counter);
-        subscriber.next(counter++);
-    }, 2000);
+ajax$.subscribe(
+    data => console.log('Sub 1:', data.response.first_name)
+);
 
-    return () => {
-        clearInterval(intervalId);
-    };
-});
+ajax$.subscribe(
+    data => console.log('Sub 2:', data.response.first_name)
+);
 
-const subscription = interval$.subscribe(value => console.log(value));
+ajax$.subscribe(
+    data => console.log('Sub 3:', data.response.first_name)
+);
 
-setTimeout(() => {
-    console.log('Unsubscribe');
-    subscription.unsubscribe();
-}, 7000);
+// const interval$ = new Observable<number>(subscriber => {
+//     let counter = 1;
+
+//     const intervalId = setInterval(() => {
+//         console.log('Emitted', counter);
+//         subscriber.next(counter++);
+//     }, 2000);
+
+//     return () => {
+//         clearInterval(intervalId);
+//     };
+// });
+
+// const subscription = interval$.subscribe(value => console.log(value));
+
+// setTimeout(() => {
+//     console.log('Unsubscribe');
+//     subscription.unsubscribe();
+// }, 7000);
 
 // const observable$ = new Observable<string>(subscriber => {
 //     console.log('Observable executed');
