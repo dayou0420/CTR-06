@@ -9566,26 +9566,41 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 /**
  * RxJS 7
  */
-const observable$ = new rxjs_1.Observable(subscriber => {
-    console.log('Observable executed');
-    subscriber.next('Alice');
-    subscriber.next('Ben');
-    setTimeout(() => subscriber.error(new Error('Failure')), 2000);
-    setTimeout(() => {
-        subscriber.next('Charlie');
-        subscriber.complete();
-    }, 4000);
+const interval$ = new rxjs_1.Observable(subscriber => {
+    let counter = 1;
+    const intervalId = setInterval(() => {
+        console.log('Emitted', counter);
+        subscriber.next(counter++);
+    }, 2000);
     return () => {
-        console.log('Teardown');
+        clearInterval(intervalId);
     };
 });
-console.log('Before subscribe');
-observable$.subscribe({
-    next: value => console.log(value),
-    error: err => console.log(err.message),
-    complete: () => console.log('Completed')
-});
-console.log('After subscribe');
+const subscription = interval$.subscribe(value => console.log(value));
+setTimeout(() => {
+    console.log('Unsubscribe');
+    subscription.unsubscribe();
+}, 7000);
+// const observable$ = new Observable<string>(subscriber => {
+//     console.log('Observable executed');
+//     subscriber.next('Alice');
+//     subscriber.next('Ben');
+//     setTimeout(() => subscriber.error(new Error('Failure')), 2000);
+//     setTimeout(() => {
+//         subscriber.next('Charlie');
+//         subscriber.complete();
+//     }, 4000);
+//     return () => {
+//         console.log('Teardown');
+//     };
+// });
+// console.log('Before subscribe');
+// observable$.subscribe({
+//     next: value => console.log(value),
+//     error: err => console.log(err.message),
+//     complete: () => console.log('Completed')
+// });
+// console.log('After subscribe');
 // const observable$ = new Observable<string> (subscriber => {
 //     console.log('Observable executed');
 //     subscriber.next('Alice');
