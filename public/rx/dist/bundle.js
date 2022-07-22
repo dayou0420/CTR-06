@@ -2,26 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/rxjs/dist/cjs/ajax/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/rxjs/dist/cjs/ajax/index.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AjaxResponse = exports.AjaxTimeoutError = exports.AjaxError = exports.ajax = void 0;
-var ajax_1 = __webpack_require__(/*! ../internal/ajax/ajax */ "./node_modules/rxjs/dist/cjs/internal/ajax/ajax.js");
-Object.defineProperty(exports, "ajax", ({ enumerable: true, get: function () { return ajax_1.ajax; } }));
-var errors_1 = __webpack_require__(/*! ../internal/ajax/errors */ "./node_modules/rxjs/dist/cjs/internal/ajax/errors.js");
-Object.defineProperty(exports, "AjaxError", ({ enumerable: true, get: function () { return errors_1.AjaxError; } }));
-Object.defineProperty(exports, "AjaxTimeoutError", ({ enumerable: true, get: function () { return errors_1.AjaxTimeoutError; } }));
-var AjaxResponse_1 = __webpack_require__(/*! ../internal/ajax/AjaxResponse */ "./node_modules/rxjs/dist/cjs/internal/ajax/AjaxResponse.js");
-Object.defineProperty(exports, "AjaxResponse", ({ enumerable: true, get: function () { return AjaxResponse_1.AjaxResponse; } }));
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
 /***/ "./node_modules/rxjs/dist/cjs/fetch/index.js":
 /*!***************************************************!*\
   !*** ./node_modules/rxjs/dist/cjs/fetch/index.js ***!
@@ -1463,390 +1443,6 @@ function execFinalizer(finalizer) {
     }
 }
 //# sourceMappingURL=Subscription.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/dist/cjs/internal/ajax/AjaxResponse.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/rxjs/dist/cjs/internal/ajax/AjaxResponse.js ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AjaxResponse = void 0;
-var getXHRResponse_1 = __webpack_require__(/*! ./getXHRResponse */ "./node_modules/rxjs/dist/cjs/internal/ajax/getXHRResponse.js");
-var AjaxResponse = (function () {
-    function AjaxResponse(originalEvent, xhr, request, type) {
-        if (type === void 0) { type = 'download_load'; }
-        this.originalEvent = originalEvent;
-        this.xhr = xhr;
-        this.request = request;
-        this.type = type;
-        var status = xhr.status, responseType = xhr.responseType;
-        this.status = status !== null && status !== void 0 ? status : 0;
-        this.responseType = responseType !== null && responseType !== void 0 ? responseType : '';
-        var allHeaders = xhr.getAllResponseHeaders();
-        this.responseHeaders = allHeaders
-            ?
-                allHeaders.split('\n').reduce(function (headers, line) {
-                    var index = line.indexOf(': ');
-                    headers[line.slice(0, index)] = line.slice(index + 2);
-                    return headers;
-                }, {})
-            : {};
-        this.response = getXHRResponse_1.getXHRResponse(xhr);
-        var loaded = originalEvent.loaded, total = originalEvent.total;
-        this.loaded = loaded;
-        this.total = total;
-    }
-    return AjaxResponse;
-}());
-exports.AjaxResponse = AjaxResponse;
-//# sourceMappingURL=AjaxResponse.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/dist/cjs/internal/ajax/ajax.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/rxjs/dist/cjs/internal/ajax/ajax.js ***!
-  \**********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fromAjax = exports.ajax = void 0;
-var map_1 = __webpack_require__(/*! ../operators/map */ "./node_modules/rxjs/dist/cjs/internal/operators/map.js");
-var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/dist/cjs/internal/Observable.js");
-var AjaxResponse_1 = __webpack_require__(/*! ./AjaxResponse */ "./node_modules/rxjs/dist/cjs/internal/ajax/AjaxResponse.js");
-var errors_1 = __webpack_require__(/*! ./errors */ "./node_modules/rxjs/dist/cjs/internal/ajax/errors.js");
-function ajaxGet(url, headers) {
-    return exports.ajax({ method: 'GET', url: url, headers: headers });
-}
-function ajaxPost(url, body, headers) {
-    return exports.ajax({ method: 'POST', url: url, body: body, headers: headers });
-}
-function ajaxDelete(url, headers) {
-    return exports.ajax({ method: 'DELETE', url: url, headers: headers });
-}
-function ajaxPut(url, body, headers) {
-    return exports.ajax({ method: 'PUT', url: url, body: body, headers: headers });
-}
-function ajaxPatch(url, body, headers) {
-    return exports.ajax({ method: 'PATCH', url: url, body: body, headers: headers });
-}
-var mapResponse = map_1.map(function (x) { return x.response; });
-function ajaxGetJSON(url, headers) {
-    return mapResponse(exports.ajax({
-        method: 'GET',
-        url: url,
-        headers: headers,
-    }));
-}
-exports.ajax = (function () {
-    var create = function (urlOrConfig) {
-        var config = typeof urlOrConfig === 'string'
-            ? {
-                url: urlOrConfig,
-            }
-            : urlOrConfig;
-        return fromAjax(config);
-    };
-    create.get = ajaxGet;
-    create.post = ajaxPost;
-    create.delete = ajaxDelete;
-    create.put = ajaxPut;
-    create.patch = ajaxPatch;
-    create.getJSON = ajaxGetJSON;
-    return create;
-})();
-var UPLOAD = 'upload';
-var DOWNLOAD = 'download';
-var LOADSTART = 'loadstart';
-var PROGRESS = 'progress';
-var LOAD = 'load';
-function fromAjax(init) {
-    return new Observable_1.Observable(function (destination) {
-        var _a, _b;
-        var config = __assign({ async: true, crossDomain: false, withCredentials: false, method: 'GET', timeout: 0, responseType: 'json' }, init);
-        var queryParams = config.queryParams, configuredBody = config.body, configuredHeaders = config.headers;
-        var url = config.url;
-        if (!url) {
-            throw new TypeError('url is required');
-        }
-        if (queryParams) {
-            var searchParams_1;
-            if (url.includes('?')) {
-                var parts = url.split('?');
-                if (2 < parts.length) {
-                    throw new TypeError('invalid url');
-                }
-                searchParams_1 = new URLSearchParams(parts[1]);
-                new URLSearchParams(queryParams).forEach(function (value, key) { return searchParams_1.set(key, value); });
-                url = parts[0] + '?' + searchParams_1;
-            }
-            else {
-                searchParams_1 = new URLSearchParams(queryParams);
-                url = url + '?' + searchParams_1;
-            }
-        }
-        var headers = {};
-        if (configuredHeaders) {
-            for (var key in configuredHeaders) {
-                if (configuredHeaders.hasOwnProperty(key)) {
-                    headers[key.toLowerCase()] = configuredHeaders[key];
-                }
-            }
-        }
-        var crossDomain = config.crossDomain;
-        if (!crossDomain && !('x-requested-with' in headers)) {
-            headers['x-requested-with'] = 'XMLHttpRequest';
-        }
-        var withCredentials = config.withCredentials, xsrfCookieName = config.xsrfCookieName, xsrfHeaderName = config.xsrfHeaderName;
-        if ((withCredentials || !crossDomain) && xsrfCookieName && xsrfHeaderName) {
-            var xsrfCookie = (_b = (_a = document === null || document === void 0 ? void 0 : document.cookie.match(new RegExp("(^|;\\s*)(" + xsrfCookieName + ")=([^;]*)"))) === null || _a === void 0 ? void 0 : _a.pop()) !== null && _b !== void 0 ? _b : '';
-            if (xsrfCookie) {
-                headers[xsrfHeaderName] = xsrfCookie;
-            }
-        }
-        var body = extractContentTypeAndMaybeSerializeBody(configuredBody, headers);
-        var _request = __assign(__assign({}, config), { url: url,
-            headers: headers,
-            body: body });
-        var xhr;
-        xhr = init.createXHR ? init.createXHR() : new XMLHttpRequest();
-        {
-            var progressSubscriber_1 = init.progressSubscriber, _c = init.includeDownloadProgress, includeDownloadProgress = _c === void 0 ? false : _c, _d = init.includeUploadProgress, includeUploadProgress = _d === void 0 ? false : _d;
-            var addErrorEvent = function (type, errorFactory) {
-                xhr.addEventListener(type, function () {
-                    var _a;
-                    var error = errorFactory();
-                    (_a = progressSubscriber_1 === null || progressSubscriber_1 === void 0 ? void 0 : progressSubscriber_1.error) === null || _a === void 0 ? void 0 : _a.call(progressSubscriber_1, error);
-                    destination.error(error);
-                });
-            };
-            addErrorEvent('timeout', function () { return new errors_1.AjaxTimeoutError(xhr, _request); });
-            addErrorEvent('abort', function () { return new errors_1.AjaxError('aborted', xhr, _request); });
-            var createResponse_1 = function (direction, event) {
-                return new AjaxResponse_1.AjaxResponse(event, xhr, _request, direction + "_" + event.type);
-            };
-            var addProgressEvent_1 = function (target, type, direction) {
-                target.addEventListener(type, function (event) {
-                    destination.next(createResponse_1(direction, event));
-                });
-            };
-            if (includeUploadProgress) {
-                [LOADSTART, PROGRESS, LOAD].forEach(function (type) { return addProgressEvent_1(xhr.upload, type, UPLOAD); });
-            }
-            if (progressSubscriber_1) {
-                [LOADSTART, PROGRESS].forEach(function (type) { return xhr.upload.addEventListener(type, function (e) { var _a; return (_a = progressSubscriber_1 === null || progressSubscriber_1 === void 0 ? void 0 : progressSubscriber_1.next) === null || _a === void 0 ? void 0 : _a.call(progressSubscriber_1, e); }); });
-            }
-            if (includeDownloadProgress) {
-                [LOADSTART, PROGRESS].forEach(function (type) { return addProgressEvent_1(xhr, type, DOWNLOAD); });
-            }
-            var emitError_1 = function (status) {
-                var msg = 'ajax error' + (status ? ' ' + status : '');
-                destination.error(new errors_1.AjaxError(msg, xhr, _request));
-            };
-            xhr.addEventListener('error', function (e) {
-                var _a;
-                (_a = progressSubscriber_1 === null || progressSubscriber_1 === void 0 ? void 0 : progressSubscriber_1.error) === null || _a === void 0 ? void 0 : _a.call(progressSubscriber_1, e);
-                emitError_1();
-            });
-            xhr.addEventListener(LOAD, function (event) {
-                var _a, _b;
-                var status = xhr.status;
-                if (status < 400) {
-                    (_a = progressSubscriber_1 === null || progressSubscriber_1 === void 0 ? void 0 : progressSubscriber_1.complete) === null || _a === void 0 ? void 0 : _a.call(progressSubscriber_1);
-                    var response = void 0;
-                    try {
-                        response = createResponse_1(DOWNLOAD, event);
-                    }
-                    catch (err) {
-                        destination.error(err);
-                        return;
-                    }
-                    destination.next(response);
-                    destination.complete();
-                }
-                else {
-                    (_b = progressSubscriber_1 === null || progressSubscriber_1 === void 0 ? void 0 : progressSubscriber_1.error) === null || _b === void 0 ? void 0 : _b.call(progressSubscriber_1, event);
-                    emitError_1(status);
-                }
-            });
-        }
-        var user = _request.user, method = _request.method, async = _request.async;
-        if (user) {
-            xhr.open(method, url, async, user, _request.password);
-        }
-        else {
-            xhr.open(method, url, async);
-        }
-        if (async) {
-            xhr.timeout = _request.timeout;
-            xhr.responseType = _request.responseType;
-        }
-        if ('withCredentials' in xhr) {
-            xhr.withCredentials = _request.withCredentials;
-        }
-        for (var key in headers) {
-            if (headers.hasOwnProperty(key)) {
-                xhr.setRequestHeader(key, headers[key]);
-            }
-        }
-        if (body) {
-            xhr.send(body);
-        }
-        else {
-            xhr.send();
-        }
-        return function () {
-            if (xhr && xhr.readyState !== 4) {
-                xhr.abort();
-            }
-        };
-    });
-}
-exports.fromAjax = fromAjax;
-function extractContentTypeAndMaybeSerializeBody(body, headers) {
-    var _a;
-    if (!body ||
-        typeof body === 'string' ||
-        isFormData(body) ||
-        isURLSearchParams(body) ||
-        isArrayBuffer(body) ||
-        isFile(body) ||
-        isBlob(body) ||
-        isReadableStream(body)) {
-        return body;
-    }
-    if (isArrayBufferView(body)) {
-        return body.buffer;
-    }
-    if (typeof body === 'object') {
-        headers['content-type'] = (_a = headers['content-type']) !== null && _a !== void 0 ? _a : 'application/json;charset=utf-8';
-        return JSON.stringify(body);
-    }
-    throw new TypeError('Unknown body type');
-}
-var _toString = Object.prototype.toString;
-function toStringCheck(obj, name) {
-    return _toString.call(obj) === "[object " + name + "]";
-}
-function isArrayBuffer(body) {
-    return toStringCheck(body, 'ArrayBuffer');
-}
-function isFile(body) {
-    return toStringCheck(body, 'File');
-}
-function isBlob(body) {
-    return toStringCheck(body, 'Blob');
-}
-function isArrayBufferView(body) {
-    return typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView(body);
-}
-function isFormData(body) {
-    return typeof FormData !== 'undefined' && body instanceof FormData;
-}
-function isURLSearchParams(body) {
-    return typeof URLSearchParams !== 'undefined' && body instanceof URLSearchParams;
-}
-function isReadableStream(body) {
-    return typeof ReadableStream !== 'undefined' && body instanceof ReadableStream;
-}
-//# sourceMappingURL=ajax.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/dist/cjs/internal/ajax/errors.js":
-/*!************************************************************!*\
-  !*** ./node_modules/rxjs/dist/cjs/internal/ajax/errors.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.AjaxTimeoutError = exports.AjaxError = void 0;
-var getXHRResponse_1 = __webpack_require__(/*! ./getXHRResponse */ "./node_modules/rxjs/dist/cjs/internal/ajax/getXHRResponse.js");
-var createErrorClass_1 = __webpack_require__(/*! ../util/createErrorClass */ "./node_modules/rxjs/dist/cjs/internal/util/createErrorClass.js");
-exports.AjaxError = createErrorClass_1.createErrorClass(function (_super) {
-    return function AjaxErrorImpl(message, xhr, request) {
-        this.message = message;
-        this.name = 'AjaxError';
-        this.xhr = xhr;
-        this.request = request;
-        this.status = xhr.status;
-        this.responseType = xhr.responseType;
-        var response;
-        try {
-            response = getXHRResponse_1.getXHRResponse(xhr);
-        }
-        catch (err) {
-            response = xhr.responseText;
-        }
-        this.response = response;
-    };
-});
-exports.AjaxTimeoutError = (function () {
-    function AjaxTimeoutErrorImpl(xhr, request) {
-        exports.AjaxError.call(this, 'ajax timeout', xhr, request);
-        this.name = 'AjaxTimeoutError';
-        return this;
-    }
-    AjaxTimeoutErrorImpl.prototype = Object.create(exports.AjaxError.prototype);
-    return AjaxTimeoutErrorImpl;
-})();
-//# sourceMappingURL=errors.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/dist/cjs/internal/ajax/getXHRResponse.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/rxjs/dist/cjs/internal/ajax/getXHRResponse.js ***!
-  \********************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getXHRResponse = void 0;
-function getXHRResponse(xhr) {
-    switch (xhr.responseType) {
-        case 'json': {
-            if ('response' in xhr) {
-                return xhr.response;
-            }
-            else {
-                var ieXHR = xhr;
-                return JSON.parse(ieXHR.responseText);
-            }
-        }
-        case 'document':
-            return xhr.responseXML;
-        case 'text':
-        default: {
-            if ('response' in xhr) {
-                return xhr.response;
-            }
-            else {
-                var ieXHR = xhr;
-                return ieXHR.responseText;
-            }
-        }
-    }
-}
-exports.getXHRResponse = getXHRResponse;
-//# sourceMappingURL=getXHRResponse.js.map
 
 /***/ }),
 
@@ -9964,16 +9560,32 @@ var exports = __webpack_exports__;
   \********************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const ajax_1 = __webpack_require__(/*! rxjs/ajax */ "./node_modules/rxjs/dist/cjs/ajax/index.js");
 const fetch_1 = __webpack_require__(/*! rxjs/fetch */ "./node_modules/rxjs/dist/cjs/fetch/index.js");
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
 /**
  * RxJS 7
  */
-const ajax$ = (0, ajax_1.ajax)('https://random-data-api.com/api/name/random_name');
-ajax$.subscribe(data => console.log('Sub 1:', data.response.first_name));
-ajax$.subscribe(data => console.log('Sub 2:', data.response.first_name));
-ajax$.subscribe(data => console.log('Sub 3:', data.response.first_name));
+// const helloButton = document.querySelector('button#hello')!;
+// const helloClick$ = new Observable<MouseEvent>(subscriber => {
+//     helloButton.addEventListener('click', (event) => {
+//         subscriber.next(event as MouseEvent);
+//     });
+// });
+// helloClick$.subscribe(event => console.log('Sub: 1', event.type, event.x, event.y));
+// setTimeout(() => {
+//     console.log('Subscription 2 starts');
+//     helloClick$.subscribe(event => console.log('Sub: 2', event.type, event.x, event.y));
+// }, 5000);
+// const ajax$ = ajax<any>('https://random-data-api.com/api/name/random_name');
+// ajax$.subscribe(
+//     data => console.log('Sub 1:', data.response.first_name)
+// );
+// ajax$.subscribe(
+//     data => console.log('Sub 2:', data.response.first_name)
+// );
+// ajax$.subscribe(
+//     data => console.log('Sub 3:', data.response.first_name)
+// );
 // const interval$ = new Observable<number>(subscriber => {
 //     let counter = 1;
 //     const intervalId = setInterval(() => {
