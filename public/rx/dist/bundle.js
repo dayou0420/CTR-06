@@ -9560,16 +9560,29 @@ var exports = __webpack_exports__;
   \********************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
 const fetch_1 = __webpack_require__(/*! rxjs/fetch */ "./node_modules/rxjs/dist/cjs/fetch/index.js");
-const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
+const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
 /**
  * RxJS 7
  */
-ourOwnOf('Alice', 'Ben', 'Charlie').subscribe({
+const somePromise = new Promise((resolve, reject) => {
+    // resolve('Resilve!');
+    reject('Rejected!');
+});
+const observableFromPromise$ = (0, rxjs_1.from)(somePromise);
+observableFromPromise$.subscribe({
     next: value => console.log(value),
+    error: err => console.log('Error: ', err),
     complete: () => console.log('Completed')
 });
+// from(['Alice', 'Ben', 'Charlie']).subscribe({
+//     next: value => console.log(value),
+//     complete: () => console.log('Completed')
+// });
+// ourOwnOf('Alice', 'Ben', 'Charlie').subscribe({
+//     next: value => console.log(value),
+//     complete: () => console.log('Completed')
+// });
 // const name$ = new Observable<string>(subscriber => {
 //     subscriber.next('Alice');
 //     subscriber.next('Ben');
@@ -9580,14 +9593,14 @@ ourOwnOf('Alice', 'Ben', 'Charlie').subscribe({
 //     next: value => console.log(value),
 //     complete: () => console.log('Completed')
 // });
-function ourOwnOf(...args) {
-    return new rxjs_1.Observable(subscriber => {
-        for (let i = 0; i < args.length; i++) {
-            subscriber.next(args[i]);
-        }
-        subscriber.complete();
-    });
-}
+// function ourOwnOf(...args: string[]): Observable<string> {
+//     return new Observable<string>(subscriber => {
+//         for(let i = 0; i < args.length; i++) {
+//             subscriber.next(args[i]);
+//         }
+//         subscriber.complete();
+//     });
+// }
 // const helloButton = document.querySelector('button#hello')!;
 // const helloClick$ = new Observable<MouseEvent>(subscriber => {
 //     helloButton.addEventListener('click', (event) => {
@@ -9678,20 +9691,20 @@ function ourOwnOf(...args) {
 /**
  * fromFetch content
  */
-const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').pipe((0, rxjs_2.switchMap)(response => {
+const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').pipe((0, rxjs_1.switchMap)(response => {
     if (response.ok) {
         // OK return data
         return response.json();
     }
     else {
         // Server is returning a status requiring the client to try something else.
-        return (0, rxjs_2.of)({ error: true, message: `Error ${response.status}` });
+        return (0, rxjs_1.of)({ error: true, message: `Error ${response.status}` });
     }
-}), (0, rxjs_2.catchError)(err => {
+}), (0, rxjs_1.catchError)(err => {
     // Network or other error, handle appropriately
     console.error(err);
-    return (0, rxjs_2.of)({ error: true, message: err.message });
-})).pipe((0, rxjs_2.map)(value => value), (0, rxjs_2.map)(value => value.results));
+    return (0, rxjs_1.of)({ error: true, message: err.message });
+})).pipe((0, rxjs_1.map)(value => value), (0, rxjs_1.map)(value => value.results));
 data$.subscribe({
     next: result => { for (const pokemon of result) {
         addItem(pokemon.name);

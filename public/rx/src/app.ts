@@ -1,11 +1,29 @@
 import { Observable } from 'rxjs';
 
 import { fromFetch } from 'rxjs/fetch';
-import { switchMap, of, catchError, map } from 'rxjs';
+import { switchMap, of, catchError, map, from } from 'rxjs';
 
 /**
  * RxJS 7
  */
+
+const somePromise = new Promise((resolve, reject) => {
+    // resolve('Resilve!');
+    reject('Rejected!');
+});
+
+const observableFromPromise$ = from(somePromise);
+
+observableFromPromise$.subscribe({
+    next: value => console.log(value),
+    error: err => console.log('Error: ', err),
+    complete: () => console.log('Completed')
+})
+
+// from(['Alice', 'Ben', 'Charlie']).subscribe({
+//     next: value => console.log(value),
+//     complete: () => console.log('Completed')
+// });
 
 // ourOwnOf('Alice', 'Ben', 'Charlie').subscribe({
 //     next: value => console.log(value),
