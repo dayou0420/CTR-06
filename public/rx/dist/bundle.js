@@ -9560,21 +9560,57 @@ var exports = __webpack_exports__;
   \********************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const fetch_1 = __webpack_require__(/*! rxjs/fetch */ "./node_modules/rxjs/dist/cjs/fetch/index.js");
 const rxjs_1 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
+const fetch_1 = __webpack_require__(/*! rxjs/fetch */ "./node_modules/rxjs/dist/cjs/fetch/index.js");
+const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/index.js");
 /**
  * RxJS 7
  */
-const somePromise = new Promise((resolve, reject) => {
-    // resolve('Resilve!');
-    reject('Rejected!');
+const triggerButton = document.querySelector('button#trigger');
+// const subscription = fromEvent<MouseEvent>(triggerButton, 'click')
+// .subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+const triggerClick$ = new rxjs_1.Observable(subscriber => {
+    // triggerButton.addEventListener('click', event => {
+    //     console.log('Event callback executed');
+    //     subscriber.next(event);
+    // });
+    const clickHandlerFn = (event) => {
+        console.log('Event callback executed');
+        subscriber.next(event);
+    };
+    triggerButton.addEventListener('click', clickHandlerFn);
+    return () => {
+        triggerButton.removeEventListener('click', clickHandlerFn);
+    };
 });
-const observableFromPromise$ = (0, rxjs_1.from)(somePromise);
-observableFromPromise$.subscribe({
-    next: value => console.log(value),
-    error: err => console.log('Error: ', err),
-    complete: () => console.log('Completed')
-});
+const subscription = triggerClick$.subscribe(event => console.log(event.type, event.x, event.y));
+setTimeout(() => {
+    console.log('Unsubscribe');
+    subscription.unsubscribe();
+}, 5000);
+// fromEvent<MouseEvent>(triggerButton, 'click').subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+// const triggerClick$ = new Observable<MouseEvent>(subscriber => {
+//     triggerButton.addEventListener('click', event => {
+//         subscriber.next(event);
+//     });
+// });
+// triggerClick$.subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+// const somePromise = new Promise((resolve, reject) => {
+//     // resolve('Resilve!');
+//     reject('Rejected!');
+// });
+// const observableFromPromise$ = from(somePromise);
+// observableFromPromise$.subscribe({
+//     next: value => console.log(value),
+//     error: err => console.log('Error: ', err),
+//     complete: () => console.log('Completed')
+// });
 // from(['Alice', 'Ben', 'Charlie']).subscribe({
 //     next: value => console.log(value),
 //     complete: () => console.log('Completed')
@@ -9691,20 +9727,20 @@ observableFromPromise$.subscribe({
 /**
  * fromFetch content
  */
-const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').pipe((0, rxjs_1.switchMap)(response => {
+const data$ = (0, fetch_1.fromFetch)('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').pipe((0, rxjs_2.switchMap)(response => {
     if (response.ok) {
         // OK return data
         return response.json();
     }
     else {
         // Server is returning a status requiring the client to try something else.
-        return (0, rxjs_1.of)({ error: true, message: `Error ${response.status}` });
+        return (0, rxjs_2.of)({ error: true, message: `Error ${response.status}` });
     }
-}), (0, rxjs_1.catchError)(err => {
+}), (0, rxjs_2.catchError)(err => {
     // Network or other error, handle appropriately
     console.error(err);
-    return (0, rxjs_1.of)({ error: true, message: err.message });
-})).pipe((0, rxjs_1.map)(value => value), (0, rxjs_1.map)(value => value.results));
+    return (0, rxjs_2.of)({ error: true, message: err.message });
+})).pipe((0, rxjs_2.map)(value => value), (0, rxjs_2.map)(value => value.results));
 data$.subscribe({
     next: result => { for (const pokemon of result) {
         addItem(pokemon.name);

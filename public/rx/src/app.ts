@@ -1,24 +1,73 @@
-import { Observable } from 'rxjs';
+import { Observable, subscribeOn } from 'rxjs';
 
 import { fromFetch } from 'rxjs/fetch';
-import { switchMap, of, catchError, map, from } from 'rxjs';
+import { switchMap, of, catchError, map, from, fromEvent } from 'rxjs';
 
 /**
  * RxJS 7
  */
 
-const somePromise = new Promise((resolve, reject) => {
-    // resolve('Resilve!');
-    reject('Rejected!');
+const triggerButton = document.querySelector('button#trigger') as HTMLElement;
+
+// const subscription = fromEvent<MouseEvent>(triggerButton, 'click')
+// .subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+
+
+const triggerClick$ = new Observable<MouseEvent>(subscriber => {
+    // triggerButton.addEventListener('click', event => {
+    //     console.log('Event callback executed');
+    //     subscriber.next(event);
+    // });
+
+    const clickHandlerFn = (event: any) => {
+        console.log('Event callback executed');
+        subscriber.next(event);
+    }
+
+    triggerButton.addEventListener('click', clickHandlerFn);
+
+    return () => {
+        triggerButton.removeEventListener('click', clickHandlerFn);
+    }
 });
 
-const observableFromPromise$ = from(somePromise);
+const subscription = triggerClick$.subscribe(
+    event => console.log(event.type, event.x, event.y)
+);
 
-observableFromPromise$.subscribe({
-    next: value => console.log(value),
-    error: err => console.log('Error: ', err),
-    complete: () => console.log('Completed')
-})
+setTimeout(() => {
+    console.log('Unsubscribe');
+    subscription.unsubscribe();
+}, 5000);
+
+// fromEvent<MouseEvent>(triggerButton, 'click').subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+
+// const triggerClick$ = new Observable<MouseEvent>(subscriber => {
+//     triggerButton.addEventListener('click', event => {
+//         subscriber.next(event);
+//     });
+// });
+
+// triggerClick$.subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+
+// const somePromise = new Promise((resolve, reject) => {
+//     // resolve('Resilve!');
+//     reject('Rejected!');
+// });
+
+// const observableFromPromise$ = from(somePromise);
+
+// observableFromPromise$.subscribe({
+//     next: value => console.log(value),
+//     error: err => console.log('Error: ', err),
+//     complete: () => console.log('Completed')
+// });
 
 // from(['Alice', 'Ben', 'Charlie']).subscribe({
 //     next: value => console.log(value),
