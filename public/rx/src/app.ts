@@ -1,5 +1,4 @@
-import { Observable, Subscriber } from 'rxjs';
-import { ajax } from 'rxjs/ajax'
+import { Observable } from 'rxjs';
 
 import { fromFetch } from 'rxjs/fetch';
 import { switchMap, of, catchError, map } from 'rxjs';
@@ -7,6 +6,32 @@ import { switchMap, of, catchError, map } from 'rxjs';
 /**
  * RxJS 7
  */
+
+// ourOwnOf('Alice', 'Ben', 'Charlie').subscribe({
+//     next: value => console.log(value),
+//     complete: () => console.log('Completed')
+// });
+
+// const name$ = new Observable<string>(subscriber => {
+//     subscriber.next('Alice');
+//     subscriber.next('Ben');
+//     subscriber.next('Charlie');
+//     subscriber.complete();
+// });
+
+// name$.subscribe({
+//     next: value => console.log(value),
+//     complete: () => console.log('Completed')
+// });
+
+// function ourOwnOf(...args: string[]): Observable<string> {
+//     return new Observable<string>(subscriber => {
+//         for(let i = 0; i < args.length; i++) {
+//             subscriber.next(args[i]);
+//         }
+//         subscriber.complete();
+//     });
+// }
 
 // const helloButton = document.querySelector('button#hello')!;
 
