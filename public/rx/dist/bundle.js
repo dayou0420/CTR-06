@@ -9567,22 +9567,22 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
  * RxJS 7
  */
 console.log('App started');
-const timer$ = new rxjs_1.Observable(subscriber => {
-    const timeoutId = setTimeout(() => {
+const interval$ = new rxjs_1.Observable(subscriber => {
+    let counter = 0;
+    const intervalId = setInterval(() => {
         console.log('Timeout!');
-        subscriber.next(0);
-        subscriber.complete();
-    }, 2000);
-    return () => clearTimeout(timeoutId);
+        subscriber.next(counter++);
+    }, 1000);
+    return () => clearInterval(intervalId);
 });
-const subscription = timer$.subscribe({
+const subscription = interval$.subscribe({
     next: value => console.log(value),
     complete: () => console.log('Completed!')
 });
 setTimeout(() => {
     subscription.unsubscribe();
     console.log('Unsubscribe');
-}, 1000);
+}, 5000);
 // const triggerButton = document.querySelector('button#trigger') as HTMLElement;
 // const subscription = fromEvent<MouseEvent>(triggerButton, 'click')
 // .subscribe(

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { fromFetch } from 'rxjs/fetch';
-import { switchMap, of, catchError, map, from, fromEvent, timer } from 'rxjs';
+import { switchMap, of, catchError, map, from, fromEvent, timer, interval } from 'rxjs';
 
 /**
  * RxJS 7
@@ -9,17 +9,18 @@ import { switchMap, of, catchError, map, from, fromEvent, timer } from 'rxjs';
 
 console.log('App started');
 
-const timer$ = new Observable<number>(subscriber => {
-    const timeoutId = setTimeout(() => {
-        console.log('Timeout!');
-        subscriber.next(0);
-        subscriber.complete();
-    }, 2000);
+const interval$ = new Observable<number>(subscriber => {
+    let counter = 0;
 
-    return () => clearTimeout(timeoutId);
+    const intervalId = setInterval(() => {
+        console.log('Timeout!');
+        subscriber.next(counter++);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
 });
 
-const subscription = timer$.subscribe({
+const subscription = interval$.subscribe({
     next: value => console.log(value),
     complete: () => console.log('Completed!')
 });
@@ -27,7 +28,7 @@ const subscription = timer$.subscribe({
 setTimeout(() => {
     subscription.unsubscribe();
     console.log('Unsubscribe');
-}, 1000);
+}, 5000);
 
 // const triggerButton = document.querySelector('button#trigger') as HTMLElement;
 
