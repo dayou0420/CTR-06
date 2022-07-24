@@ -9566,30 +9566,49 @@ const rxjs_2 = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/dist/cjs/ind
 /**
  * RxJS 7
  */
-const triggerButton = document.querySelector('button#trigger');
+console.log('App started');
+const timer$ = new rxjs_1.Observable(subscriber => {
+    const timeoutId = setTimeout(() => {
+        console.log('Timeout!');
+        subscriber.next(0);
+        subscriber.complete();
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+});
+const subscription = timer$.subscribe({
+    next: value => console.log(value),
+    complete: () => console.log('Completed!')
+});
+setTimeout(() => {
+    subscription.unsubscribe();
+    console.log('Unsubscribe');
+}, 1000);
+// const triggerButton = document.querySelector('button#trigger') as HTMLElement;
 // const subscription = fromEvent<MouseEvent>(triggerButton, 'click')
 // .subscribe(
 //     event => console.log(event.type, event.x, event.y)
 // );
-const triggerClick$ = new rxjs_1.Observable(subscriber => {
-    // triggerButton.addEventListener('click', event => {
-    //     console.log('Event callback executed');
-    //     subscriber.next(event);
-    // });
-    const clickHandlerFn = (event) => {
-        console.log('Event callback executed');
-        subscriber.next(event);
-    };
-    triggerButton.addEventListener('click', clickHandlerFn);
-    return () => {
-        triggerButton.removeEventListener('click', clickHandlerFn);
-    };
-});
-const subscription = triggerClick$.subscribe(event => console.log(event.type, event.x, event.y));
-setTimeout(() => {
-    console.log('Unsubscribe');
-    subscription.unsubscribe();
-}, 5000);
+// const triggerClick$ = new Observable<MouseEvent>(subscriber => {
+//     // triggerButton.addEventListener('click', event => {
+//     //     console.log('Event callback executed');
+//     //     subscriber.next(event);
+//     // });
+//     const clickHandlerFn = (event: any) => {
+//         console.log('Event callback executed');
+//         subscriber.next(event);
+//     }
+//     triggerButton.addEventListener('click', clickHandlerFn);
+//     return () => {
+//         triggerButton.removeEventListener('click', clickHandlerFn);
+//     }
+// });
+// const subscription = triggerClick$.subscribe(
+//     event => console.log(event.type, event.x, event.y)
+// );
+// setTimeout(() => {
+//     console.log('Unsubscribe');
+//     subscription.unsubscribe();
+// }, 5000);
 // fromEvent<MouseEvent>(triggerButton, 'click').subscribe(
 //     event => console.log(event.type, event.x, event.y)
 // );
